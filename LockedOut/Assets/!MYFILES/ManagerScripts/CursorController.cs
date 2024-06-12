@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Device;
 
 public class CursorController : MonoBehaviour
 {
@@ -35,7 +37,6 @@ public class CursorController : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
-
         EventSystem.OnEscPressed(paused);
     }
 }

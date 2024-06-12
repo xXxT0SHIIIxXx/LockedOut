@@ -7,7 +7,7 @@ public class EventSystem : MonoBehaviour
 {
     // Start is called before the first frame update
     public static event Action<bool> OnEscPress;
-
+    public static event Action<bool> OnPickup;
 
     public static void OnEscPressed(bool onEsc)
     {
