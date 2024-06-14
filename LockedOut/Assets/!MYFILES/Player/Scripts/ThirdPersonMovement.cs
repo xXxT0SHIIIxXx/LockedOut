@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -16,11 +17,21 @@ public class ThirdPersonMovement : MonoBehaviour
     public float sprintSpeed = 12f;
     public float turnSmoothTime = 0.1f;
 
+    public LayerMask isGround;
+    private Vector3 lastSurfacePos;
+    [SerializeField] private float playerSmoothRotation;
+    private Vector3 newNormal;
+    public Vector3 currentNormal;
+    public AudioSource source;
+
+    public AudioClip knock;
+    public AudioClip ring;
     float turnSmoothVelocity;
     // Start is called before the first frame update
     void Start()
     {
         EventSystem.OnEscPress += isPaused;
+        EventSystem.OnDoorAct += KnockRing;
     }
 
     // Update is called once per frame
@@ -29,6 +40,24 @@ public class ThirdPersonMovement : MonoBehaviour
         if (!paused)
         {
             Movement();
+            AlignToSurface();
+        }
+    }
+
+    void AlignToSurface()
+    {
+        Ray ray = new Ray(transform.position, -transform.up);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, isGround))
+        {
+            if (hit.collider.CompareTag("Ground"))
+            {
+                newNormal = hit.normal;
+                lastSurfacePos = hit.point;
+                transform.position = new Vector3(transform.position.x, hit.point.y + 1f, transform.position.z);
+                //currentNormal = Vector3.Lerp(currentNormal, newNormal, playerSmoothRotation);
+                //transform.up = currentNormal;
+            }
         }
     }
 
@@ -50,17 +79,45 @@ public class ThirdPersonMovement : MonoBehaviour
         }
     }
 
+    public void KnockRing(bool knockRing, Quaternion doorRotation)
+    {
+        transform.rotation = Quaternion.Slerp(transform.rotation, doorRotation, 1f);
+        if (knockRing)
+        {
+            Debug.Log("is Knocking");
+            animator.SetTrigger("Knock");
+            source.PlayOneShot(knock);
+        }
+        else
+        {
+            Debug.Log("is Ringing");
+            animator.SetTrigger("Ring");
+            source.PlayOneShot(ring);
+        }
+    }
+
+    public void CantMove()
+
+    {
+        paused = true;
+    }
+
+    public void CanMove()
+    {
+        paused = false;
+    }
+
     public void isPaused(bool pause)
     {
         paused = pause;
 
         if(paused)
         {
-            freelookRig.SetActive(false);
+            //freelookRig.SetActive(false);
         }
         else if (!paused)
         {
-            freelookRig.SetActive(true);
+            //freelookRig.SetActive(true);
         }
     }
 }
