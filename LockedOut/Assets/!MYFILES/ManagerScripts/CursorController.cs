@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Device;
+using UnityEngine.Rendering;
 
 public class CursorController : MonoBehaviour
 {
     bool paused;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +23,9 @@ public class CursorController : MonoBehaviour
         {
             Paused();
         }
+
+        //manager.profile.TryGet<CircleWipeVolumeComponent>(out CircleWipeVolumeComponent circ);
+        //circ.radius.Override(0.3f);
     }
 
     void Paused()

@@ -22,10 +22,6 @@ public class ThirdPersonMovement : MonoBehaviour
     [SerializeField] private float playerSmoothRotation;
     private Vector3 newNormal;
     public Vector3 currentNormal;
-    public AudioSource source;
-
-    public AudioClip knock;
-    public AudioClip ring;
     float turnSmoothVelocity;
     // Start is called before the first frame update
     void Start()
@@ -79,20 +75,22 @@ public class ThirdPersonMovement : MonoBehaviour
         }
     }
 
-    public void KnockRing(bool knockRing, Quaternion doorRotation)
+    public void KnockRing(bool knockRing, Vector3 pos, Quaternion doorRotation)
     {
         transform.rotation = Quaternion.Slerp(transform.rotation, doorRotation, 1f);
+        Vector3 newPos = new Vector3(pos.x, transform.position.y, pos.z);
+        transform.position = Vector3.Lerp(transform.position, newPos, 1f);
         if (knockRing)
         {
             Debug.Log("is Knocking");
             animator.SetTrigger("Knock");
-            source.PlayOneShot(knock);
+            EventSystem.OnDoorVocal(knockRing);
         }
         else
         {
             Debug.Log("is Ringing");
             animator.SetTrigger("Ring");
-            source.PlayOneShot(ring);
+            EventSystem.OnDoorVocal(knockRing);
         }
     }
 

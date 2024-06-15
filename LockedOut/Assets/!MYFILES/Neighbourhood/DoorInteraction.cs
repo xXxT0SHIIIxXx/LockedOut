@@ -5,12 +5,17 @@ using UnityEngine;
 
 public class DoorInteraction : MonoBehaviour
 {
+    AudioSource source;
+    public AudioClip knock;
+    public AudioClip ring;
     public Transform doorPos;
+    public Transform bellPos;
     bool inside;
     // Start is called before the first frame update
     void Start()
     {
-        
+        source = GetComponent<AudioSource>();
+        EventSystem.OnDoorSound += OnSound;
     }
 
     // Update is called once per frame
@@ -21,14 +26,26 @@ public class DoorInteraction : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 Debug.Log("Tried To Knock");
-                EventSystem.OnDoorUse(true, doorPos.localRotation);
+                EventSystem.OnDoorUse(true, doorPos.position, doorPos.localRotation);
             }
 
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 Debug.Log("Tried To Ring");
-                EventSystem.OnDoorUse(false, doorPos.localRotation);
+                EventSystem.OnDoorUse(false, bellPos.position, bellPos.localRotation);
             }
+        }
+    }
+
+    void OnSound(bool knockRing)
+    {
+        if(knockRing)
+        {
+            source.PlayOneShot(knock);
+        }
+        else
+        {
+            source.PlayOneShot(ring);
         }
     }
 
