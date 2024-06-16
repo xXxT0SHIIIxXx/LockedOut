@@ -7,6 +7,9 @@ public class CircleWipeController : MonoBehaviour
 {
     public Volume manager;
     CircleWipeVolumeComponent wipeComponent;
+    public AudioSource source;
+    public AudioClip fadeIn;
+    public AudioClip fadeOut;
 
     bool closeOpen;
 
@@ -46,6 +49,7 @@ public class CircleWipeController : MonoBehaviour
     {
         elapsedTime = 0;
         closeOpen = true;
+        source.PlayOneShot(fadeOut);
     }
 
     [ContextMenu("Open Circle")]
@@ -53,5 +57,6 @@ public class CircleWipeController : MonoBehaviour
     {
         elapsedTime = 0;
         closeOpen = false;
+        source.PlayOneShot(fadeIn);
     }
 }
