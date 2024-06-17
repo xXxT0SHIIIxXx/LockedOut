@@ -3,7 +3,27 @@ guid: 6ea4c83bd87ae421d929aff048e638ba
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BlueishPurple
+    second: {fileID: 2100000, guid: fe915594988846045b7a322615f47f09, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CircuitTexture
+    second: {fileID: 2100000, guid: e7e99ffc14fe4984db776c936287646f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PinkOrangeTexture
+    second: {fileID: 2100000, guid: 1f6193a6b566d1641b57dfc8319399e6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RedPink
+    second: {fileID: 2100000, guid: e8503152b0bb4ba4fb4eebabe8107f4e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

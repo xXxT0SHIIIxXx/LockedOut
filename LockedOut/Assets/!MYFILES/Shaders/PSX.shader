@@ -2,15 +2,18 @@ Shader "Unlit/PSX"
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "black" {}
-        _MainCol("Color",Vector) = (0,0,0,0)
+        [MainTexture] _MainTex ("Albedo", 2D) = "black" {}
+        [MainColor] _MainCol("Color",Vector) = (0,0,0,0)
         _PixelationFactor("Pixel",float) = 1
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "Queue" = "Transparent"
+               "IgnoreProjector" = "True"
+               "RenderType" = "Transparent" }
         LOD 100
-
+        Blend SrcAlpha OneMinusSrcAlpha
+        Cull Off
         Pass
         {
             CGPROGRAM
@@ -39,6 +42,7 @@ Shader "Unlit/PSX"
             float4 _MainCol;
             float4 _MainTex_ST;
             float _PixelationFactor;
+            float _BackfaceCull;
 
             v2f vert (appdata v)
             {
@@ -46,13 +50,10 @@ Shader "Unlit/PSX"
 
                 // Transform the vertex position to clip space
                 float4 clipPos = UnityObjectToClipPos(v.vertex);
-
                 // Convert clip space to NDC (Normalized Device Coordinates)
                 float2 ndcPos = clipPos.xy / clipPos.w;
-
                 // Quantize NDC to create the vertex snapping effect
                 ndcPos = floor(ndcPos * _PixelationFactor + 0.5) / _PixelationFactor;
-
                 // Convert NDC back to clip space
                 o.vertex = float4(ndcPos * clipPos.w, clipPos.z, clipPos.w);
 
@@ -66,13 +67,14 @@ Shader "Unlit/PSX"
             {
                 // sample the texture
                 fixed4 col = tex2D(_MainTex, i.uv);
-
-                if(_MainCol.a != 0)
+                
+                if(col.x == 0)
                 {
                     col = _MainCol;
                 }
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
+                clip(col.a);
                 return col;
             }
             ENDCG

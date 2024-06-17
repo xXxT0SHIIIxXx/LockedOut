@@ -3,7 +3,42 @@ guid: f1941cd92925e43a1a9c2bdb9eb5941e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black
+    second: {fileID: 2100000, guid: 4ee3bf300324413459a4f831295bc86c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black Matte
+    second: {fileID: 2100000, guid: 57a3bb4252b64e64e80eb278f7f256d7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Blue Matte
+    second: {fileID: 2100000, guid: 25ac5ab68cd47cd4ea545e596781d594, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 71ad2bd02b163004fbd6ec175e369c9d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: ba05f3391f2af1646b51e0e0492fcc17, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TyeDye1
+    second: {fileID: 2100000, guid: 764890ad1f419f34fbe3b7ce7ceb9adc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: White Matte
+    second: {fileID: 2100000, guid: 90c4d243eb5c8de458495406c6c70e21, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
