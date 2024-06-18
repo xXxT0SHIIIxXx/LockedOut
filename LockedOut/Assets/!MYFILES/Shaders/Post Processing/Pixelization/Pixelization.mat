@@ -114,9 +114,9 @@ Material:
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
-    - _Ph: 1
-    - _Pixels: 480
-    - _Pw: 1
+    - _Ph: 3
+    - _Pixels: 1024
+    - _Pw: 4
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
