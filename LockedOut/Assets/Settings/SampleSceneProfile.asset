@@ -1,5 +1,27 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3026909738210431492
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b43619672e8b9954abf94be8a1468835, type: 3}
+  m_Name: PixelizationVolumeComponent
+  m_EditorClassIdentifier: 
+  active: 1
+  resolution:
+    m_OverrideState: 1
+    m_Value: 480
+  pixelWidth:
+    m_OverrideState: 1
+    m_Value: 1
+  pixelHeight:
+    m_OverrideState: 1
+    m_Value: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16,6 +38,7 @@ MonoBehaviour:
   - {fileID: 714365157198056962}
   - {fileID: 1991454332281109264}
   - {fileID: 5118639052120750412}
+  - {fileID: -3026909738210431492}
 --- !u!114 &714365157198056962
 MonoBehaviour:
   m_ObjectHideFlags: 3
