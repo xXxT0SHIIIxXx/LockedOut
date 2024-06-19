@@ -4,7 +4,6 @@ Shader "Unlit/PSX"
     {
         [MainTexture] _MainTex ("Albedo", 2D) = "black" {}
         [MainColor] _MainCol("Color",Vector) = (0,0,0,0)
-        _PixelationFactor("Pixel",float) = 1
         _Levels("Levels",int) = 10
     }
     SubShader
@@ -34,6 +33,7 @@ Shader "Unlit/PSX"
             struct v2f
             {
                 float2 uv : TEXCOORD0;
+                float4 screenPosition : TEXCOORD1;
                 UNITY_FOG_COORDS(1)
                 float4 vertex : SV_POSITION;
             };
@@ -42,25 +42,14 @@ Shader "Unlit/PSX"
             sampler2D _MainTex;
             float4 _MainCol;
             float4 _MainTex_ST;
-            float _PixelationFactor;
-            float _BackfaceCull;
+
             int _Levels;
 
             v2f vert (appdata v)
             {
                 v2f o;
-
-                // Transform the vertex position to clip space
-                float4 clipPos = UnityObjectToClipPos(v.vertex);
-                // Convert clip space to NDC (Normalized Device Coordinates)
-                float2 ndcPos = clipPos.xy / clipPos.w;
-                // Quantize NDC to create the vertex snapping effect
-                ndcPos = floor(ndcPos * _PixelationFactor + 0.5) / _PixelationFactor;
-                // Convert NDC back to clip space
-                o.vertex = float4(ndcPos * clipPos.w, clipPos.z, clipPos.w);
-
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                UNITY_TRANSFER_FOG(o, o.vertex);
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                o.uv = v.uv;
                 return o;
             }
 

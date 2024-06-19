@@ -2,17 +2,17 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-public class PixelizationRendererFeature : ScriptableRendererFeature
+public class DitheringRendererFeature : ScriptableRendererFeature
 {
-    class PixelizationRenderPass : ScriptableRenderPass
+    class DitheringRenderPass : ScriptableRenderPass
     {
         public Material material;
         private RenderTargetIdentifier source;
         private RenderTargetHandle temporaryTexture;
 
-        private PixelizationVolumeComponent volumeComponent;
+        private DitheringVolumeComponent volumeComponent;
 
-        public PixelizationRenderPass(Material material)
+        public DitheringRenderPass(Material material)
         {
             this.material = material;
             temporaryTexture.Init("_TemporaryColorTexture");
@@ -28,15 +28,17 @@ public class PixelizationRendererFeature : ScriptableRendererFeature
             if (!renderingData.cameraData.postProcessEnabled) return;
 
             var stack = VolumeManager.instance.stack;
-            volumeComponent = stack.GetComponent<PixelizationVolumeComponent>();
+            volumeComponent = stack.GetComponent<DitheringVolumeComponent>();
             if (volumeComponent == null || !volumeComponent.IsActive()) return;
 
-            CommandBuffer cmd = CommandBufferPool.Get("Pixelization Pass");
+            CommandBuffer cmd = CommandBufferPool.Get("Dither Pass");
             source = renderingData.cameraData.renderer.cameraColorTarget;
             // Set the radius property on the material
-            material.SetFloat("_Pixels", volumeComponent.resolution.value);
-            material.SetFloat("_Pw", volumeComponent.pixelWidth.value);
-            material.SetFloat("_Ph", volumeComponent.pixelHeight.value);
+            material.SetFloat("_Spread", volumeComponent.spread.value);
+            material.SetInt("_BayerLevel", volumeComponent.bayerLevel.value);
+            material.SetInt("_RedColorCount", volumeComponent.redColorCount.value);
+            material.SetInt("_GreenColorCount", volumeComponent.greenColorCount.value);
+            material.SetInt("_BlueColorCount", volumeComponent.blueColorCount.value);
 
             // Copy the camera color target to a temporary render texture
             Blit(cmd, source, temporaryTexture.Identifier());
@@ -56,18 +58,18 @@ public class PixelizationRendererFeature : ScriptableRendererFeature
     }
 
     [System.Serializable]
-    public class PixelizationSettings
+    public class DitheringSettings
     {
         public Material material = null;
     }
 
-    public PixelizationSettings settings = new PixelizationSettings();
+    public DitheringSettings settings = new DitheringSettings();
 
-    PixelizationRenderPass renderPass;
+    DitheringRenderPass renderPass;
 
     public override void Create()
     {
-        renderPass = new PixelizationRenderPass(settings.material)
+        renderPass = new DitheringRenderPass(settings.material)
         {
             renderPassEvent = RenderPassEvent.AfterRendering
         };

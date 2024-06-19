@@ -40,19 +40,21 @@ Shader "Hidden/Pixelization"
                 return o;
             }
 
-            sampler2D _MainTex;
+
+            Texture2D _MainTex;
             float _Pixels;
             float _Pw;
             float _Ph;
             float _Dx;
             float _Dy;
+            SamplerState point_clamp_sampler;
 
             fixed4 frag (v2f i) : SV_Target
             {
                 _Dx = _Pw * (1/_Pixels);
                 _Dy = _Ph * (1/_Pixels);
                 float2 coord = float2(_Dx * floor(i.uv.x/ _Dx),_Dy * floor(i.uv.y/ _Dy));
-                fixed4 col = tex2D(_MainTex, coord);
+                fixed4 col = _MainTex.Sample(point_clamp_sampler, coord);
                 return col;
             }
             ENDCG
