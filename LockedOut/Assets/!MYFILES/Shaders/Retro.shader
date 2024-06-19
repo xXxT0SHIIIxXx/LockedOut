@@ -1,10 +1,9 @@
-Shader "Unlit/PSX"
+Shader "Unlit/Retro"
 {
     Properties
     {
         [MainTexture] _MainTex ("Albedo", 2D) = "black" {}
         [MainColor] _MainCol("Color",Vector) = (0,0,0,0)
-        _Levels("Levels",int) = 10
     }
     SubShader
     {
@@ -62,18 +61,6 @@ Shader "Unlit/PSX"
                 {
                     col = _MainCol;
                 }
-
-                float greyscale = max(col.r, max(col.g, col.b));
-                float lower     = floor(greyscale * _Levels) / _Levels;
-                float lowerDiff = abs(greyscale - lower);
-
-                float upper     = ceil(greyscale * _Levels) / _Levels;
-                float upperDiff = abs(upper - greyscale);
-
-                float level      = lowerDiff <= upperDiff ? lower : upper;
-                float adjustment = level / greyscale;
-
-                col.rgb = col.rgb * adjustment;
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
                 clip(col.a);

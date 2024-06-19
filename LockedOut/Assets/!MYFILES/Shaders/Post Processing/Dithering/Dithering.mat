@@ -103,7 +103,7 @@ Material:
     - _BayerLevel: 1
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
-    - _BlueColorCount: 16
+    - _BlueColorCount: 8
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
@@ -117,7 +117,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _GreenColorCount: 16
+    - _GreenColorCount: 8
     - _MaxDistance: 1
     - _Metallic: 0
     - _MinDistance: 0
@@ -125,11 +125,11 @@ Material:
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RedColorCount: 16
+    - _RedColorCount: 8
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _Spread: 0.12
+    - _Spread: 0.15
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
