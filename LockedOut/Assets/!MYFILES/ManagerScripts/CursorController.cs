@@ -14,6 +14,7 @@ public class CursorController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        EventSystem.OnEscPress += JustCursorControl;
     }
 
     // Update is called once per frame
@@ -23,9 +24,22 @@ public class CursorController : MonoBehaviour
         {
             Paused();
         }
+    }
 
-        //manager.profile.TryGet<CircleWipeVolumeComponent>(out CircleWipeVolumeComponent circ);
-        //circ.radius.Override(0.3f);
+    void JustCursorControl(bool control)
+    {
+        if(control)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else if(!control)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
+        paused = control;
     }
 
     void Paused()

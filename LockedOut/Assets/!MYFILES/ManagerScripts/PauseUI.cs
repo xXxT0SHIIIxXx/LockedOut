@@ -5,7 +5,11 @@ using UnityEngine;
 public class PauseUI : MonoBehaviour
 {
     bool paused;
-    public GameObject pauseMenu;
+    bool opened;
+    public RectTransform pauseMenu;
+
+    float elapsedTime;
+    [SerializeField] float duration;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +19,28 @@ public class PauseUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (opened)
+        {
+            elapsedTime += Time.deltaTime;
+
+            if(elapsedTime < duration)
+            {
+                var value = Mathf.Lerp(pauseMenu.anchoredPosition.x, 490,elapsedTime/duration);
+
+                pauseMenu.anchoredPosition = new Vector2(value, 0);
+            }
+        }
+        else if (!opened)
+        {
+            elapsedTime += Time.deltaTime;
+
+            if (elapsedTime < duration)
+            {
+                var value = Mathf.Lerp(pauseMenu.anchoredPosition.x, -490, elapsedTime / duration);
+
+                pauseMenu.anchoredPosition = new Vector2(value, 0);
+            }
+        }
     }
 
     public void isPaused(bool isPaused)
@@ -24,11 +49,13 @@ public class PauseUI : MonoBehaviour
 
         if(paused)
         {
-            pauseMenu.SetActive(true);
+            opened = true;
+            elapsedTime = 0;
         }
         else if(!paused)
         {
-            pauseMenu.SetActive(false);
+            opened = false;
+            elapsedTime = 0;
         }
     }
 }
