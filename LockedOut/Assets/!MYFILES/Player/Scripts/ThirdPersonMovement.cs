@@ -51,8 +51,8 @@ public class ThirdPersonMovement : MonoBehaviour
                 newNormal = hit.normal;
                 lastSurfacePos = hit.point;
                 transform.position = new Vector3(transform.position.x, hit.point.y + 1f, transform.position.z);
-                //currentNormal = Vector3.Lerp(currentNormal, newNormal, playerSmoothRotation);
-                //transform.up = currentNormal;
+                currentNormal = Vector3.Lerp(currentNormal, newNormal, playerSmoothRotation);
+                transform.up = currentNormal;
             }
         }
     }
