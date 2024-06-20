@@ -16988,7 +16988,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 1230613461}
-  duration: 3
+  duration: 10
 --- !u!114 &1917775947
 MonoBehaviour:
   m_ObjectHideFlags: 0
