@@ -6,10 +6,12 @@ using UnityEngine.Rendering;
 public class CircleWipeController : MonoBehaviour
 {
     public Volume manager;
-    CircleWipeVolumeComponent wipeComponent;
+    public CircleWipeVolumeComponent wipeComponent;
     public AudioSource source;
     public AudioClip fadeIn;
     public AudioClip fadeOut;
+
+    int levelIndex;
 
     bool closeOpen;
 
@@ -22,6 +24,7 @@ public class CircleWipeController : MonoBehaviour
         manager.profile.TryGet<CircleWipeVolumeComponent>(out CircleWipeVolumeComponent circ);
         wipeComponent = circ;
         wipeComponent.radius.Override(0f);
+        EventSystem.OnCircleClose += CloseCircle;
     }
 
     private void Update()
@@ -32,7 +35,10 @@ public class CircleWipeController : MonoBehaviour
             float percentageComplete = elapsedTime / duration;
             float val = Mathf.Lerp(1,0,percentageComplete);
             wipeComponent.radius.Override(val);
-            
+            if(val <= 0)
+            {
+                EventSystem.OnLoadNextLevel(true, levelIndex);
+            }
         }
         else if (!closeOpen && elapsedTime<=duration)
         {
@@ -45,8 +51,9 @@ public class CircleWipeController : MonoBehaviour
 
 
     [ContextMenu("Close Circle")]
-    void CloseCircle()
+    void CloseCircle(bool openClose, int level)
     {
+        levelIndex = level;
         elapsedTime = 0;
         closeOpen = true;
         source.PlayOneShot(fadeOut);

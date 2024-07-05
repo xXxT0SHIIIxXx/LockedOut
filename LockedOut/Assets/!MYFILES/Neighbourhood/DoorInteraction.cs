@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class DoorInteraction : MonoBehaviour
 {
+    public House house;
     AudioSource source;
     public AudioClip knock;
     public AudioClip ring;
@@ -21,7 +22,7 @@ public class DoorInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(inside)
+        if(inside && !house.locked)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {

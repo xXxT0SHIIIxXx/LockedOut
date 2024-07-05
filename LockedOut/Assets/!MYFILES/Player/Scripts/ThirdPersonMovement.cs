@@ -36,7 +36,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (!paused)
         {
             Movement();
-            AlignToSurface();
+            //AlignToSurface();
         }
     }
 
