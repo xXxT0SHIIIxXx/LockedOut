@@ -38,7 +38,7 @@ public class PauseButton : MonoBehaviour, IPointerEnterHandler,IPointerExitHandl
 
     public void Resume()
     {
-        EventSystem.OnEscPressed(false);
+        EventSystem.OnPause(false);
         Debug.Log("Resume Clicked!");
     }
 

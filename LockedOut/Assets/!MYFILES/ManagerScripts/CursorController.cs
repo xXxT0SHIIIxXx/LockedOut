@@ -7,7 +7,7 @@ using UnityEngine.Rendering;
 
 public class CursorController : MonoBehaviour
 {
-    bool paused;
+    bool isPaused;
 
     // Start is called before the first frame update
     void Start()
@@ -39,23 +39,12 @@ public class CursorController : MonoBehaviour
             Cursor.visible = false;
         }
 
-        paused = control;
+        isPaused = control;
     }
 
     void Paused()
     {
-        paused = !paused;
-
-        if (paused)
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-        else if (!paused)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-        EventSystem.OnEscPressed(paused);
+        isPaused = !isPaused;
+        EventSystem.OnPause(isPaused);
     }
 }

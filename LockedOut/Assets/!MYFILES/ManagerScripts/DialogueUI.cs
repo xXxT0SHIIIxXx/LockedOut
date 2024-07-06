@@ -7,15 +7,15 @@ using UnityEngine.UI;
 public class DialogueUI : MonoBehaviour
 {
     [Header("UI Element References")]
-    public RectTransform dialogueUI;
-    public GameObject nextUI;
-    public GameObject acceptDeclineUI;
-    public TMP_Text dialogueTXT;
-    public Image portraitIMG;
+    [SerializeField] RectTransform dialogueUI;
+    [SerializeField] GameObject nextUI;
+    [SerializeField] GameObject acceptDeclineUI;
+    [SerializeField] TMP_Text dialogueTXT;
+    [SerializeField] Image portraitIMG;
 
-    public House curHouse;
+    [SerializeField] House curHouse;
     [SerializeField] int index;
-    public ThirdPersonMovement player;
+    [SerializeField] ThirdPersonMovement player;
     [Header("Utility Vars")]
     [SerializeField] bool opened;
     [SerializeField] float elapsedTime;
@@ -33,45 +33,53 @@ public class DialogueUI : MonoBehaviour
     {
         if (opened)
         {
-            elapsedTime += Time.deltaTime;
-
-            if (elapsedTime < duration)
-            {
-                var value = Mathf.Lerp(dialogueUI.anchoredPosition.y, 280, elapsedTime / duration);
-
-                dialogueUI.anchoredPosition = new Vector2(0, value);
-            }
-
-            if(Input.GetKeyDown(KeyCode.Tab) && nextUI.activeSelf == true)
-            {
-                NextVoiceLine();
-            }
-
-            if(acceptDeclineUI.activeSelf == true)
-            {
-                if(Input.GetKeyDown(KeyCode.E))
-                {
-                    //Start next Scene
-                    EventSystem.CircleClose(false,curHouse.minigameIndex);
-                    canvas.enabled = false;
-                }
-
-                if (Input.GetKeyDown(KeyCode.Q))
-                {
-                    DialogueEnd();
-                    player.CanMove();
-                }
-            }
+            MoveDialogueUI(280);
+            DialogueControls();
         }
         else if (!opened)
         {
-            elapsedTime += Time.deltaTime;
+            MoveDialogueUI(-285);
+        }
+    }
 
-            if (elapsedTime < duration)
+    void MoveDialogueUI(float yPos)
+    {
+        if (dialogueUI.anchoredPosition.y == yPos) return;
+
+        elapsedTime += Time.deltaTime;
+
+        if (elapsedTime < duration)
+        {
+            var value = Mathf.Lerp(dialogueUI.anchoredPosition.y, yPos, elapsedTime / duration);
+
+            dialogueUI.anchoredPosition = new Vector2(0, value);
+        }
+    }
+
+    void DialogueControls()
+    {
+        if (PlayerInput.DialogueNextPress() && nextUI.activeSelf == true)
+        {
+            NextVoiceLine();
+        }
+
+        if (acceptDeclineUI.activeSelf == true)
+        {
+            int result = PlayerInput.DialogueChoicePress();
+            Debug.Log(result);
+            if (result == 0)
             {
-                var value = Mathf.Lerp(dialogueUI.anchoredPosition.y, -285, elapsedTime / duration);
+                //Start next Scene
+                EventSystem.CircleClose(false, curHouse.minigameIndex);
+                canvas.enabled = false;
+            }
 
-                dialogueUI.anchoredPosition = new Vector2(0, value);
+            if (result == 1)
+            {
+                DialogueEnd();
+                player.CanMove();
+                curHouse.locked = false;
+                index = 0;
             }
         }
     }
@@ -80,8 +88,8 @@ public class DialogueUI : MonoBehaviour
     public void DialogueStart(House house)
     {
         curHouse = house;
-        //nextUI.SetActive(true);
-        //acceptDeclineUI.SetActive(false);
+        nextUI.SetActive(true);
+        acceptDeclineUI.SetActive(false);
         portraitIMG.sprite = curHouse.portraitImg;
         dialogueTXT.text = curHouse.voiceLines[index];
         elapsedTime = 0;

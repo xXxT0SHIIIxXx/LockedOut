@@ -6,7 +6,7 @@ public class PauseUI : MonoBehaviour
 {
     bool paused;
     bool opened;
-    public RectTransform pauseMenu;
+    [SerializeField] RectTransform pauseMenu; //pos.x range is (-490,490) for lerp
 
     float elapsedTime;
     [SerializeField] float duration;

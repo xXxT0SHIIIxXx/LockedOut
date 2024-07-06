@@ -5,14 +5,17 @@ using UnityEngine.UI;
 
 public class House : MonoBehaviour
 {
+    [Header("UI Elements")]
     public Sprite portraitImg;
 
+    [Header("Data Vars")]
+    public bool locked;
     public string[] voiceLines;
     public int minigameIndex;
-    float elapsedTime;
+
     [SerializeField] float duration = 5;
+    float elapsedTime;
     bool started;
-    public bool locked;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +31,8 @@ public class House : MonoBehaviour
             {
                 EventSystem.OnDialogueStart(this);
                 locked = true;
+                elapsedTime = 0;
+                started = false;
             }
             
         }

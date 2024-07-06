@@ -1,39 +1,47 @@
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
-    public CharacterController characterController;
-    public Animator animator;
-    public Transform cam;
-    public GameObject freelookRig;
-    public float speed = 6f;
-    bool paused;
-    public float walkSpeed = 6f;
-    public float sprintSpeed = 12f;
-    public float turnSmoothTime = 0.1f;
+    [Header("Object References")]
+    [SerializeField] CharacterController characterController;
+    [SerializeField] Animator animator;
+    [SerializeField] Transform cam;
+    [SerializeField] GameObject freelookRig;
 
-    public LayerMask isGround;
-    private Vector3 lastSurfacePos;
-    [SerializeField] private float playerSmoothRotation;
-    private Vector3 newNormal;
-    public Vector3 currentNormal;
+    [Header("Movement Vars")]
+    [SerializeField] float speed = 6f;
+    [SerializeField] float walkSpeed = 6f;
+    [SerializeField] float sprintSpeed = 12f;
+    [SerializeField] float turnSmoothTime = 0.1f;
+    [SerializeField] LayerMask isGround;
+    [SerializeField] private float playerSmoothRotation = 0.2f;
+    [SerializeField] private float rotationSpeed = 6f;
+
+    bool isPaused;
+    bool canMove;
+    Vector2 movementAxis;
+    Vector3 currentNormal;
+    Vector3 lastSurfacePos;
+    Vector3 newNormal;
     float turnSmoothVelocity;
     // Start is called before the first frame update
     void Start()
     {
-        EventSystem.OnEscPress += isPaused;
+        CanMove();
+        EventSystem.OnEscPress += PauseControl;
         EventSystem.OnDoorAct += KnockRing;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!paused)
+        if (canMove)
         {
             Movement();
             //AlignToSurface();
@@ -59,9 +67,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void Movement()
     {
-        float hori = Input.GetAxisRaw("Horizontal");
-        float vert = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(hori, 0, vert).normalized;
+        movementAxis = PlayerInput.GetMovementAxis();
+        Vector3 direction = new Vector3(movementAxis.x, 0, movementAxis.y).normalized;
         animator.SetFloat("magnitude", direction.magnitude);
         if (direction.magnitude >= 0.1f)
         {
@@ -77,44 +84,69 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public void KnockRing(bool knockRing, Vector3 pos, Quaternion doorRotation)
     {
-        transform.rotation = Quaternion.Slerp(transform.rotation, doorRotation, 1f);
-        Vector3 newPos = new Vector3(pos.x, transform.position.y, pos.z);
-        transform.position = Vector3.Lerp(transform.position, newPos, 1f);
-        if (knockRing)
+        Vector3 position = new Vector3(pos.x, transform.position.y, pos.z);
+        CantMove();
+        StartCoroutine(KnockRingMovement(position, doorRotation, knockRing));
+    }
+
+    private IEnumerator KnockRingMovement(Vector3 targetPosition, Quaternion targetRotation, bool isKnock)
+    {
+        var transPos = new Vector3(transform.position.x, 0, transform.position.z);
+        // Lerp position
+        while (Vector3.Distance(transPos, targetPosition) > 6f)
+        {
+            Debug.Log(Vector3.Distance(transPos, targetPosition));
+            animator.SetFloat("magnitude", 1f);
+            transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime);
+            yield return null;
+        }
+        transform.position = targetPosition;
+
+        // Slerp rotation
+        while (Quaternion.Angle(transform.rotation, targetRotation) > 1f)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            yield return null;
+        }
+        transform.rotation = targetRotation;
+
+        // Trigger animation
+        if (isKnock)
         {
             Debug.Log("is Knocking");
             animator.SetTrigger("Knock");
-            EventSystem.OnDoorVocal(knockRing);
+            EventSystem.OnDoorVocal(isKnock);
         }
         else
         {
             Debug.Log("is Ringing");
             animator.SetTrigger("Ring");
-            EventSystem.OnDoorVocal(knockRing);
+            EventSystem.OnDoorVocal(isKnock);
         }
     }
 
     public void CantMove()
 
     {
-        paused = true;
+        canMove = false;
     }
-
     public void CanMove()
     {
-        paused = false;
+        canMove = true;
     }
 
-    public void isPaused(bool pause)
+    public void PauseControl(bool pause)
     {
-        paused = pause;
+        isPaused = pause;
 
-        if(paused)
+        if(isPaused)
         {
+            CantMove();
             //freelookRig.SetActive(false);
         }
-        else if (!paused)
+        else if (!isPaused)
         {
+            CanMove();
             //freelookRig.SetActive(true);
         }
     }

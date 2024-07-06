@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class DoorInteraction : MonoBehaviour
 {
-    public House house;
+    [SerializeField] House house;
     AudioSource source;
-    public AudioClip knock;
-    public AudioClip ring;
-    public Transform doorPos;
-    public Transform bellPos;
+    [SerializeField] AudioClip knock;
+    [SerializeField] AudioClip ring;
+    [SerializeField] Transform doorPos;
+    [SerializeField] Transform bellPos;
     bool inside;
     // Start is called before the first frame update
     void Start()
@@ -24,16 +24,18 @@ public class DoorInteraction : MonoBehaviour
     {
         if(inside && !house.locked)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            int result = PlayerInput.GetDoorKeyPress();
+
+            if (result == 0)
             {
                 Debug.Log("Tried To Knock");
-                EventSystem.OnDoorUse(true, doorPos.position, doorPos.localRotation);
+                EventSystem.OnDoorInteract(true, doorPos.position, doorPos.localRotation);
             }
 
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (result == 1)
             {
                 Debug.Log("Tried To Ring");
-                EventSystem.OnDoorUse(false, bellPos.position, bellPos.localRotation);
+                EventSystem.OnDoorInteract(false, bellPos.position, bellPos.localRotation);
             }
         }
     }
@@ -54,7 +56,7 @@ public class DoorInteraction : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            EventSystem.OnDoorHit(true, doorPos.position);
+            EventSystem.DoorTriggerEnter(true, doorPos.position);
             inside = true;
         }
     }
@@ -63,7 +65,7 @@ public class DoorInteraction : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            EventSystem.OnDoorHit(false, Vector3.zero);
+            EventSystem.DoorTriggerEnter(false, Vector3.zero);
             inside = false;
         }
     }

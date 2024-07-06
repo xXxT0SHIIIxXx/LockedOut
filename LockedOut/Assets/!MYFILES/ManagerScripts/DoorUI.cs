@@ -5,13 +5,14 @@ using UnityEngine;
 public class DoorUI : MonoBehaviour
 {
     public GameObject uiPrefab;
+    [SerializeField] Canvas canvas;
+
     GameObject doorUI;
     Vector3 doorPos;
-    public float speed;
     // Start is called before the first frame update
     void Start()
     {
-        EventSystem.OnDoorInter += OnDoorInteract;
+        EventSystem.OnDoorEnter += ManageDoorUI;
     }
 
     // Update is called once per frame
@@ -25,12 +26,12 @@ public class DoorUI : MonoBehaviour
     }
 
 
-    void OnDoorInteract(bool enterExit,Vector3 doorpos)
+    void ManageDoorUI(bool enterExit,Vector3 doorpos)
     {
         if(enterExit)
         {
             doorPos = doorpos;
-            doorUI = Instantiate(uiPrefab, FindObjectOfType<Canvas>().transform);
+            doorUI = Instantiate(uiPrefab, canvas.transform);
         }
         else
         {
