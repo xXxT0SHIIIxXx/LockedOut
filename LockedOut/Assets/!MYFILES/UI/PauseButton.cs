@@ -8,11 +8,13 @@ public class PauseButton : MonoBehaviour, IPointerEnterHandler,IPointerExitHandl
 {
     public WobblyText wobbleText;
     Button bttn;
+    GameSystem gameSys;
     private void Start()
     {
-        EventSystem.OnEscPress += ToggleButton;
         bttn = this.GetComponent<Button>();
         wobbleText.speed = 0;
+        //Change this eventually
+        gameSys = FindAnyObjectByType<GameSystem>().GetComponent<GameSystem>();
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -38,12 +40,14 @@ public class PauseButton : MonoBehaviour, IPointerEnterHandler,IPointerExitHandl
 
     public void Resume()
     {
-        EventSystem.OnPause(false);
+        //Needs to specifically only Unpause Game
+        gameSys.PauseBttnEvent();
         Debug.Log("Resume Clicked!");
     }
 
     public void Options()
     {
+        //Needs to open Options menu
         Debug.Log("Options Clicked!");
     }
 

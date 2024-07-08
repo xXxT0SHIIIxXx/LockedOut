@@ -13,7 +13,11 @@ public class DialogueUI : MonoBehaviour
     [SerializeField] TMP_Text dialogueTXT;
     [SerializeField] Image portraitIMG;
 
-    [SerializeField] House curHouse;
+    [Header("Events")]
+    public GameEvent OnDialogAccept;
+    public GameEvent OnDialogDecline;
+
+    HouseData curHouse;
     [SerializeField] int index;
     [SerializeField] ThirdPersonMovement player;
     [Header("Utility Vars")]
@@ -25,7 +29,6 @@ public class DialogueUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventSystem.OnDialogueBegin += DialogueStart;
     }
 
     // Update is called once per frame
@@ -66,34 +69,42 @@ public class DialogueUI : MonoBehaviour
         if (acceptDeclineUI.activeSelf == true)
         {
             int result = PlayerInput.DialogueChoicePress();
-            Debug.Log(result);
             if (result == 0)
             {
                 //Start next Scene
-                EventSystem.CircleClose(false, curHouse.minigameIndex);
                 canvas.enabled = false;
+                FadeData data = new FadeData();
+                data.nextLevelID = curHouse.id;
+                data.isOpen = false;
+                OnDialogAccept.Raise(this,data);
             }
 
             if (result == 1)
             {
                 DialogueEnd();
-                player.CanMove();
-                curHouse.locked = false;
                 index = 0;
+                curHouse.answered = false;
+                MovementData data = new MovementData();
+                data.canMove = true;
+                OnDialogDecline.Raise(this,data);
             }
         }
     }
 
     [ContextMenu("Dialogue Start")]
-    public void DialogueStart(House house)
+    public void DialogueStart(Component sender, object data)
     {
-        curHouse = house;
-        nextUI.SetActive(true);
-        acceptDeclineUI.SetActive(false);
-        portraitIMG.sprite = curHouse.portraitImg;
-        dialogueTXT.text = curHouse.voiceLines[index];
-        elapsedTime = 0;
-        opened = true;
+        if(data is HouseData)
+        {
+            HouseData result = (HouseData)data;
+            curHouse = result;
+            nextUI.SetActive(true);
+            acceptDeclineUI.SetActive(false);
+            portraitIMG.sprite = curHouse.portraitImg;
+            dialogueTXT.text = curHouse.voiceLines[index];
+            elapsedTime = 0;
+            opened = true;
+        }
     }
 
     public void DialogueEnd()

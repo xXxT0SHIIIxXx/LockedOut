@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PauseUI : MonoBehaviour
 {
-    bool paused;
     bool opened;
     [SerializeField] RectTransform pauseMenu; //pos.x range is (-490,490) for lerp
 
@@ -13,7 +13,6 @@ public class PauseUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventSystem.OnEscPress += isPaused;
     }
 
     // Update is called once per frame
@@ -43,18 +42,13 @@ public class PauseUI : MonoBehaviour
         }
     }
 
-    public void isPaused(bool isPaused)
+    public void isPaused(Component sender, object data )
     {
-        paused = isPaused;
+        if(data is PauseData)
+        {
+            PauseData result = (PauseData)data;
 
-        if(paused)
-        {
-            opened = true;
-            elapsedTime = 0;
-        }
-        else if(!paused)
-        {
-            opened = false;
+            opened = result.pauseState;
             elapsedTime = 0;
         }
     }

@@ -6,14 +6,20 @@ using UnityEngine.UI;
 
 public class PedestrianHandler : MonoBehaviour
 {
+    Animator animator;
     public GameObject[] waypoints;
     GameObject curWaypoint;
     public int curIndex;
     bool subtract;
+    bool paused;
     public NavMeshAgent agent;
     // Start is called before the first frame update
     void Start()
     {
+        if(animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
         if(curWaypoint == null)
         {
             curWaypoint = waypoints[curIndex];
@@ -65,5 +71,26 @@ public class PedestrianHandler : MonoBehaviour
 
         curWaypoint = waypoints[curIndex];
         agent.SetDestination(curWaypoint.transform.position);
+    }
+
+    public void SetAnimSpeed(Component sender, object data)
+    {
+        if(data is PauseData)
+        {
+            PauseData pauseData = (PauseData)data;
+            paused = pauseData.pauseState;
+            if(pauseData.pauseState)
+            {
+                animator.speed = 0;
+                agent.velocity = Vector3.zero;
+                agent.isStopped = true;
+                
+            }
+            else if (!pauseData.pauseState)
+            {
+                animator.speed = 1;
+                agent.isStopped = false;
+            }
+        }
     }
 }

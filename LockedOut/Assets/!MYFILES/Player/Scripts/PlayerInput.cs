@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerInput
 {
+    public static KeyCode pauseKey = KeyCode.Escape;
     public static KeyCode knockKey = KeyCode.E;
     public static KeyCode doorBellKey = KeyCode.Q;
     public static KeyCode acceptKey = KeyCode.E;
@@ -15,6 +16,11 @@ public class PlayerInput
         float hori = Input.GetAxisRaw("Horizontal");
         float vert = Input.GetAxisRaw("Vertical");
         return new Vector2(hori, vert);
+    }
+
+    public static bool GetPausePress()
+    {
+        return Input.GetKeyDown(pauseKey);
     }
 
     public static int GetDoorKeyPress()

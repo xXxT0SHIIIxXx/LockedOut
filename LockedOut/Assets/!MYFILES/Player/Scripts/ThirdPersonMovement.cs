@@ -5,6 +5,7 @@ using TMPro;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static UnityEditor.PlayerSettings;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
@@ -14,16 +15,16 @@ public class ThirdPersonMovement : MonoBehaviour
     [SerializeField] Transform cam;
     [SerializeField] GameObject freelookRig;
 
+    [Header("Events")]
+    public GameEvent OnInteractionDone;
+
     [Header("Movement Vars")]
     [SerializeField] float speed = 6f;
-    [SerializeField] float walkSpeed = 6f;
-    [SerializeField] float sprintSpeed = 12f;
     [SerializeField] float turnSmoothTime = 0.1f;
     [SerializeField] LayerMask isGround;
     [SerializeField] private float playerSmoothRotation = 0.2f;
     [SerializeField] private float rotationSpeed = 6f;
 
-    bool isPaused;
     bool canMove;
     Vector2 movementAxis;
     Vector3 currentNormal;
@@ -33,35 +34,19 @@ public class ThirdPersonMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CanMove();
-        EventSystem.OnEscPress += PauseControl;
-        EventSystem.OnDoorAct += KnockRing;
+        PauseData data = new PauseData();
+        data.pauseState = true;
+        MoveControl(this, data);
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (canMove)
         {
             Movement();
-            //AlignToSurface();
-        }
-    }
-
-    void AlignToSurface()
-    {
-        Ray ray = new Ray(transform.position, -transform.up);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, isGround))
-        {
-            if (hit.collider.CompareTag("Ground"))
-            {
-                newNormal = hit.normal;
-                lastSurfacePos = hit.point;
-                transform.position = new Vector3(transform.position.x, hit.point.y + 1f, transform.position.z);
-                currentNormal = Vector3.Lerp(currentNormal, newNormal, playerSmoothRotation);
-                transform.up = currentNormal;
-            }
+           
         }
     }
 
@@ -82,18 +67,20 @@ public class ThirdPersonMovement : MonoBehaviour
         }
     }
 
-    public void KnockRing(bool knockRing, Vector3 pos, Quaternion doorRotation)
+    public void KnockRing(int knockRing, Vector3 pos, Quaternion doorRotation, HouseData hD)
     {
         Vector3 position = new Vector3(pos.x, transform.position.y, pos.z);
-        CantMove();
-        StartCoroutine(KnockRingMovement(position, doorRotation, knockRing));
+        StartCoroutine(KnockRingMovement(position, doorRotation, knockRing, hD));
     }
 
-    private IEnumerator KnockRingMovement(Vector3 targetPosition, Quaternion targetRotation, bool isKnock)
+    private IEnumerator KnockRingMovement(Vector3 targetPosition, Quaternion targetRotation, int isKnock, HouseData hD)
     {
+        string animBaseLayer = "Base Layer";
+        int knockAnimHash = Animator.StringToHash(animBaseLayer + ".Knock");
+        int ringAnimHash = Animator.StringToHash(animBaseLayer + ".Ring");
         var transPos = new Vector3(transform.position.x, 0, transform.position.z);
         // Lerp position
-        while (Vector3.Distance(transPos, targetPosition) > 6f)
+        while (Vector3.Distance(transPos, targetPosition) > 4f)
         {
             Debug.Log(Vector3.Distance(transPos, targetPosition));
             animator.SetFloat("magnitude", 1f);
@@ -111,43 +98,47 @@ public class ThirdPersonMovement : MonoBehaviour
         transform.rotation = targetRotation;
 
         // Trigger animation
-        if (isKnock)
+        if (isKnock == 0)
         {
             Debug.Log("is Knocking");
             animator.SetTrigger("Knock");
-            EventSystem.OnDoorVocal(isKnock);
         }
-        else
+        else if (isKnock == 1)
         {
             Debug.Log("is Ringing");
             animator.SetTrigger("Ring");
-            EventSystem.OnDoorVocal(isKnock);
         }
-    }
 
-    public void CantMove()
-
-    {
-        canMove = false;
-    }
-    public void CanMove()
-    {
-        canMove = true;
-    }
-
-    public void PauseControl(bool pause)
-    {
-        isPaused = pause;
-
-        if(isPaused)
+        float counter = 0;
+        float waitTime = 4;
+        while (counter < (waitTime))
         {
-            CantMove();
-            //freelookRig.SetActive(false);
+            counter += Time.deltaTime;
+            yield return null;
         }
-        else if (!isPaused)
+
+        OnInteractionDone.Raise(this, hD);
+    }
+
+    public void MoveControl(Component sender, object data)
+    {
+        if(data is PauseData)
         {
-            CanMove();
-            //freelookRig.SetActive(true);
+            PauseData result = (PauseData)data;
+
+            canMove = !result.pauseState;
+        }
+        else if(data is HouseData)
+        {
+            HouseData result = (HouseData)data;
+            KnockRing(result.knockRing, result.curPos.position, result.curPos.localRotation,result);
+            canMove = result.canPlayerMove;
+        }
+        else if(data is MovementData)
+        {
+            MovementData result = (MovementData)data;
+
+            canMove = result.canMove;
         }
     }
 }

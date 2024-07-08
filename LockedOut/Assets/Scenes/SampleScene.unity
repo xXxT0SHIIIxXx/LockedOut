@@ -261,6 +261,10 @@ GameObject:
   - component: {fileID: 73797054}
   - component: {fileID: 73797051}
   - component: {fileID: 73797055}
+  - component: {fileID: 73797057}
+  - component: {fileID: 73797056}
+  - component: {fileID: 73797058}
+  - component: {fileID: 73797059}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -373,9 +377,8 @@ MonoBehaviour:
   animator: {fileID: 1632910239}
   cam: {fileID: 330585546}
   freelookRig: {fileID: 0}
+  OnInteractionDone: {fileID: 11400000, guid: 7bfb8a5df1dd53144b6ce1ecd9a705f3, type: 2}
   speed: 6
-  walkSpeed: 6
-  sprintSpeed: 12
   turnSmoothTime: 0.1
   isGround:
     serializedVersion: 2
@@ -516,6 +519,139 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e96f3c72789720448a01be1984b4dbb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &73797056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73797046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcc34efc9011544eacf775e89c47b1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: f5760ea2a63e3fc458bb0559346d984c, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 73797051}
+        m_TargetAssemblyTypeName: ThirdPersonMovement, Assembly-CSharp
+        m_MethodName: MoveControl
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 73797055}
+        m_TargetAssemblyTypeName: CursorController, Assembly-CSharp
+        m_MethodName: Paused
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 73797057}
+        m_TargetAssemblyTypeName: PlayerAnimator, Assembly-CSharp
+        m_MethodName: SetAnimSpeed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &73797057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73797046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed3fd923f22481a40b358926114415f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1632910239}
+--- !u!114 &73797058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73797046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcc34efc9011544eacf775e89c47b1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: aa47862c9fba2244b9059572bbbd90bf, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 73797051}
+        m_TargetAssemblyTypeName: ThirdPersonMovement, Assembly-CSharp
+        m_MethodName: MoveControl
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1917775958}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: InteractionSound
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &73797059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73797046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcc34efc9011544eacf775e89c47b1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: e387d1b9427891842b9faf74fd1e2972, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 73797051}
+        m_TargetAssemblyTypeName: ThirdPersonMovement, Assembly-CSharp
+        m_MethodName: MoveControl
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &84854428
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,8 +705,7 @@ MonoBehaviour:
   house: {fileID: 0}
   knock: {fileID: 8300000, guid: a73091ed5c6802e47914ca743d0a3fa3, type: 3}
   ring: {fileID: 8300000, guid: b301c8bf35ccec44489a06f715f79069, type: 3}
-  doorPos: {fileID: 1721686125}
-  bellPos: {fileID: 2032250597}
+  OnHouseTriggerEnter: {fileID: 0}
 --- !u!65 &84854431
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2058,7 +2193,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.19937329, y: 0.66527015, z: -0.19122644, w: 0.6936126}
+  m_LocalRotation: {x: 0.19937325, y: 0.66527015, z: -0.19122647, w: 0.6936126}
   m_LocalPosition: {x: 41.609955, y: 7.779413, z: -0.43777537}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2658,7 +2793,7 @@ GameObject:
   - component: {fileID: 393619117}
   - component: {fileID: 393619116}
   m_Layer: 0
-  m_Name: Door
+  m_Name: Door Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2814,8 +2949,8 @@ MonoBehaviour:
   house: {fileID: 3469287838250157172}
   knock: {fileID: 8300000, guid: a73091ed5c6802e47914ca743d0a3fa3, type: 3}
   ring: {fileID: 8300000, guid: b301c8bf35ccec44489a06f715f79069, type: 3}
-  doorPos: {fileID: 1314489803}
-  bellPos: {fileID: 1529886104}
+  OnHouseTriggerEnter: {fileID: 11400000, guid: b1bf84e14e74a41419da3e0f484beb2c,
+    type: 2}
 --- !u!95 &393619117
 Animator:
   serializedVersion: 5
@@ -4255,6 +4390,34 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &699947017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699947012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcc34efc9011544eacf775e89c47b1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: f5760ea2a63e3fc458bb0559346d984c, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 699947013}
+        m_TargetAssemblyTypeName: PedestrianHandler, Assembly-CSharp
+        m_MethodName: SetAnimSpeed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!64 &740691556
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4503,6 +4666,7 @@ GameObject:
   m_Component:
   - component: {fileID: 832575519}
   - component: {fileID: 832575518}
+  - component: {fileID: 832575520}
   m_Layer: 0
   m_Name: Global Volume
   m_TagString: Untagged
@@ -4542,6 +4706,102 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &832575520
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 832575517}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: b88ab5f364df74ad5ba768cf5b21bbd1, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.205
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &834708975
 GameObject:
   m_ObjectHideFlags: 0
@@ -4923,6 +5183,34 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &942571979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 942571974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcc34efc9011544eacf775e89c47b1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: f5760ea2a63e3fc458bb0559346d984c, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 942571975}
+        m_TargetAssemblyTypeName: PedestrianHandler, Assembly-CSharp
+        m_MethodName: SetAnimSpeed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &943586617
 GameObject:
   m_ObjectHideFlags: 0
@@ -6623,6 +6911,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 699947013}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6ea4c83bd87ae421d929aff048e638ba,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 699947017}
   m_SourcePrefab: {fileID: 100100000, guid: 6ea4c83bd87ae421d929aff048e638ba, type: 3}
 --- !u!1001 &1187288279
 PrefabInstance:
@@ -10181,6 +10473,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 942571975}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f1941cd92925e43a1a9c2bdb9eb5941e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 942571979}
   m_SourcePrefab: {fileID: 100100000, guid: f1941cd92925e43a1a9c2bdb9eb5941e, type: 3}
 --- !u!1001 &1347972464
 PrefabInstance:
@@ -11664,7 +11960,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89a58e7173c03a0479348c1271d6726f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 73797051}
 --- !u!1 &1647895296
 GameObject:
   m_ObjectHideFlags: 0
@@ -12548,9 +12843,16 @@ GameObject:
   - component: {fileID: 1917775946}
   - component: {fileID: 1917775949}
   - component: {fileID: 1917775950}
+  - component: {fileID: 1917775958}
   - component: {fileID: 1917775951}
   - component: {fileID: 1917775952}
   - component: {fileID: 1917775953}
+  - component: {fileID: 1917775954}
+  - component: {fileID: 1917775955}
+  - component: {fileID: 1917775956}
+  - component: {fileID: 1917775957}
+  - component: {fileID: 1917775960}
+  - component: {fileID: 1917775959}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -12619,6 +12921,7 @@ MonoBehaviour:
   source: {fileID: 1917775951}
   fadeIn: {fileID: 8300000, guid: 9aebe4a4d600f734283ca205a7bcf518, type: 3}
   fadeOut: {fileID: 8300000, guid: f43e3ff0e45c4464b854691f9e6349ef, type: 3}
+  OnLoadMinigame: {fileID: 11400000, guid: a4b2f02be9ea30849b5b56a6480d6077, type: 2}
   duration: 2
 --- !u!82 &1917775951
 AudioSource:
@@ -12733,7 +13036,8 @@ MonoBehaviour:
   acceptDeclineUI: {fileID: 1092742477}
   dialogueTXT: {fileID: 666521321}
   portraitIMG: {fileID: 1989898}
-  curHouse: {fileID: 0}
+  OnDialogAccept: {fileID: 11400000, guid: 9dff159e128b1cf48ae3e0d438ced4b3, type: 2}
+  OnDialogDecline: {fileID: 11400000, guid: e387d1b9427891842b9faf74fd1e2972, type: 2}
   index: 0
   player: {fileID: 73797051}
   opened: 0
@@ -12752,6 +13056,208 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a045b7c5e48b6d40836fa11cdec3c7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnPlayerPauseToggle: {fileID: 11400000, guid: f5760ea2a63e3fc458bb0559346d984c,
+    type: 2}
+  OnPlayerHouseInteract: {fileID: 11400000, guid: aa47862c9fba2244b9059572bbbd90bf,
+    type: 2}
+  OnDialogBegin: {fileID: 11400000, guid: abaaca497e9c62c40b132b18374d543e, type: 2}
+  houses: []
+--- !u!114 &1917775954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917775945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcc34efc9011544eacf775e89c47b1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: f5760ea2a63e3fc458bb0559346d984c, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1917775946}
+        m_TargetAssemblyTypeName: PauseUI, Assembly-CSharp
+        m_MethodName: isPaused
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1917775955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917775945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcc34efc9011544eacf775e89c47b1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: b1bf84e14e74a41419da3e0f484beb2c, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1917775953}
+        m_TargetAssemblyTypeName: GameSystem, Assembly-CSharp
+        m_MethodName: HouseTriggerEvent
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1917775949}
+        m_TargetAssemblyTypeName: DoorUI, Assembly-CSharp
+        m_MethodName: ManageDoorUI
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1917775956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917775945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcc34efc9011544eacf775e89c47b1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 7bfb8a5df1dd53144b6ce1ecd9a705f3, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1917775953}
+        m_TargetAssemblyTypeName: GameSystem, Assembly-CSharp
+        m_MethodName: InteractionDone
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1917775957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917775945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcc34efc9011544eacf775e89c47b1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: abaaca497e9c62c40b132b18374d543e, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1917775952}
+        m_TargetAssemblyTypeName: DialogueUI, Assembly-CSharp
+        m_MethodName: DialogueStart
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1917775958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917775945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b45291348cd23d408c6ab824c19c665, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fxSrc: {fileID: 1917775951}
+  fxClips:
+  - {fileID: 8300000, guid: a73091ed5c6802e47914ca743d0a3fa3, type: 3}
+  - {fileID: 8300000, guid: b301c8bf35ccec44489a06f715f79069, type: 3}
+--- !u!114 &1917775959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917775945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcc34efc9011544eacf775e89c47b1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: a4b2f02be9ea30849b5b56a6480d6077, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1917775953}
+        m_TargetAssemblyTypeName: GameSystem, Assembly-CSharp
+        m_MethodName: LoadMinigameScene
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1917775960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917775945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dcc34efc9011544eacf775e89c47b1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 9dff159e128b1cf48ae3e0d438ced4b3, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1917775950}
+        m_TargetAssemblyTypeName: CircleWipeController, Assembly-CSharp
+        m_MethodName: CircleControl
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1932179038
 GameObject:
   m_ObjectHideFlags: 0
@@ -13492,7 +13998,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2038828181}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.19937329, y: 0.66527015, z: -0.19122644, w: 0.6936126}
+  m_LocalRotation: {x: 0.19937325, y: 0.66527015, z: -0.19122647, w: 0.6936126}
   m_LocalPosition: {x: 41.609955, y: 7.779413, z: -0.43777537}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -23465,6 +23971,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   portraitImg: {fileID: 21300000, guid: 89bb41b2816927545b7a075f248f8255, type: 3}
+  inside: 0
   locked: 0
   voiceLines:
   - Hello buddy, Nice to see ya!
@@ -23472,7 +23979,11 @@ MonoBehaviour:
   - Rats keep eating through my pipes and I can't catch them alone
   - Would you mind helping me out? I have a reward for ya!!
   minigameIndex: 0
-  duration: 3
+  password: 63000000
+  passwordInput: 
+  UiPos: {fileID: 393619113}
+  doorPos: {fileID: 1314489803}
+  bellPos: {fileID: 1529886104}
 --- !u!33 &3469287838257108589
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class DoorUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventSystem.OnDoorEnter += ManageDoorUI;
+
     }
 
     // Update is called once per frame
@@ -26,17 +26,22 @@ public class DoorUI : MonoBehaviour
     }
 
 
-    void ManageDoorUI(bool enterExit,Vector3 doorpos)
+    public void ManageDoorUI(Component sender, object data)
     {
-        if(enterExit)
+        if(data is HouseData)
         {
-            doorPos = doorpos;
-            doorUI = Instantiate(uiPrefab, canvas.transform);
-        }
-        else
-        {
-            doorPos = doorpos;
-            Destroy(doorUI);
+            HouseData houseData = (HouseData)data;
+
+            if (houseData.inside)
+            {
+                doorPos = houseData.doorPos.position;
+                doorUI = Instantiate(uiPrefab, canvas.transform);
+            }
+            else if (!houseData.inside)
+            {
+                doorPos = Vector3.zero;
+                Destroy(doorUI);
+            }
         }
     }
 }

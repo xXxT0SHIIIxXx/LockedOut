@@ -9,55 +9,29 @@ public class DoorInteraction : MonoBehaviour
     AudioSource source;
     [SerializeField] AudioClip knock;
     [SerializeField] AudioClip ring;
-    [SerializeField] Transform doorPos;
-    [SerializeField] Transform bellPos;
     bool inside;
+
+    public GameEvent OnHouseTriggerEnter;
     // Start is called before the first frame update
     void Start()
     {
         source = GetComponent<AudioSource>();
-        EventSystem.OnDoorSound += OnSound;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(inside && !house.locked)
-        {
-            int result = PlayerInput.GetDoorKeyPress();
-
-            if (result == 0)
-            {
-                Debug.Log("Tried To Knock");
-                EventSystem.OnDoorInteract(true, doorPos.position, doorPos.localRotation);
-            }
-
-            if (result == 1)
-            {
-                Debug.Log("Tried To Ring");
-                EventSystem.OnDoorInteract(false, bellPos.position, bellPos.localRotation);
-            }
-        }
+        
     }
-
-    void OnSound(bool knockRing)
-    {
-        if(knockRing)
-        {
-            source.PlayOneShot(knock);
-        }
-        else
-        {
-            source.PlayOneShot(ring);
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
         {
-            EventSystem.DoorTriggerEnter(true, doorPos.position);
-            inside = true;
+            
+            house.inside = true;
+            HouseData houseData = new HouseData();
+            houseData = houseData.createDatafromHouse(house);
+            OnHouseTriggerEnter.Raise(this, houseData);
         }
     }
 
@@ -65,8 +39,10 @@ public class DoorInteraction : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            EventSystem.DoorTriggerEnter(false, Vector3.zero);
-            inside = false;
+            house.inside = false;
+            HouseData houseData = new HouseData();
+            houseData = houseData.createDatafromHouse(house);
+            OnHouseTriggerEnter.Raise(this, houseData);
         }
     }
 }

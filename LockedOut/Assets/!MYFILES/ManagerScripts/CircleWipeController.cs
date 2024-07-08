@@ -11,10 +11,11 @@ public class CircleWipeController : MonoBehaviour
     public AudioClip fadeIn;
     public AudioClip fadeOut;
 
-    int levelIndex;
+    [Header("Events")]
+    public GameEvent OnLoadMinigame;
 
+    int nextLevelID;
     bool closeOpen;
-
     float elapsedTime;
     public float duration;
     //close == true Open == false
@@ -24,7 +25,6 @@ public class CircleWipeController : MonoBehaviour
         manager.profile.TryGet<CircleWipeVolumeComponent>(out CircleWipeVolumeComponent circ);
         wipeComponent = circ;
         wipeComponent.radius.Override(0f);
-        EventSystem.OnCircleClose += CloseCircle;
     }
 
     private void Update()
@@ -37,7 +37,9 @@ public class CircleWipeController : MonoBehaviour
             wipeComponent.radius.Override(val);
             if(val <= 0)
             {
-                EventSystem.OnLoadNextLevel(true, levelIndex);
+                MinigameData data = new MinigameData();
+                data.LevelID = nextLevelID;
+                OnLoadMinigame.Raise(this, data);
             }
         }
         else if (!closeOpen && elapsedTime<=duration)
@@ -50,10 +52,28 @@ public class CircleWipeController : MonoBehaviour
     }
 
 
-    [ContextMenu("Close Circle")]
-    void CloseCircle(bool openClose, int level)
+    public void CircleControl(Component sender, object data)
     {
-        levelIndex = level;
+        if(data is FadeData)
+        {
+            FadeData result = (FadeData)data;
+
+            if(result.isOpen)
+            {
+                OpenCircle();
+            }
+            else if(!result.isOpen)
+            {
+                nextLevelID = result.nextLevelID;
+                CloseCircle();
+            }
+        }
+    }
+
+
+    [ContextMenu("Close Circle")]
+    void CloseCircle()
+    {
         elapsedTime = 0;
         closeOpen = true;
         source.PlayOneShot(fadeOut);

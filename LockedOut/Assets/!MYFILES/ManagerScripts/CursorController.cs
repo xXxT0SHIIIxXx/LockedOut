@@ -14,37 +14,30 @@ public class CursorController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        EventSystem.OnEscPress += JustCursorControl;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            Paused();
-        }
+
     }
 
-    void JustCursorControl(bool control)
+    public void Paused(Component sender, object data)
     {
-        if(control)
+        if(data is PauseData)
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            PauseData  result = (PauseData)data;
+            isPaused = result.pauseState;
+            if (isPaused)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            else if (!isPaused)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
         }
-        else if(!control)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-
-        isPaused = control;
-    }
-
-    void Paused()
-    {
-        isPaused = !isPaused;
-        EventSystem.OnPause(isPaused);
     }
 }
