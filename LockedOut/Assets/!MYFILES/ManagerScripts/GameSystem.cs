@@ -38,6 +38,7 @@ public struct HouseData
     public bool locked;
     public bool inside;
     public bool answered;
+    public bool passwordCorrect;
     public bool canPlayerMove;
 
     public string[] voiceLines;
@@ -166,28 +167,39 @@ public class GameSystem : MonoBehaviour
         {
             HouseData result = (HouseData)data;
             curHouseData = result;
-
-            if (curHouseData.password.Length == 1)
-            {
-                //No Password so Start Dialog.
-                curHouseData.answered = true;
-                OnDialogBegin.Raise(this, curHouseData);
-            }
-            else if(curHouseData.password.Length > 1)
-            {
-                //Has Password so Give Player back movement and input to list and wait for new keypress.
-                curHouseData.canPlayerMove = true;
-
-                //Add Input to List
-                curHouseData.AddInputToPassWord(curHouseData);
-
-                //Give Player back movement
-                PauseData pauseData = isPaused();
-                OnPlayerPauseToggle.Raise(this, pauseData);
-            }
+            InteractionDecide();
         }
     }
 
+
+    void InteractionDecide()
+    {
+        if (curHouseData.password.Length == 1 || curHouseData.passwordCorrect)
+        {
+            //No Password so Start Dialog.
+            curHouseData.answered = true;
+            OnDialogBegin.Raise(this, curHouseData);
+        }
+        else if (curHouseData.password.Length > 1)
+        {
+            //Has Password so Give Player back movement and input to list and wait for new keypress.
+            curHouseData.canPlayerMove = true;
+
+            //Add Input to List
+            curHouseData.AddInputToPassWord(curHouseData);
+
+            if(curHouseData.isPasswordRight())
+            {
+                curHouseData.passwordCorrect = true;
+                InteractionDecide();
+                return;
+            }
+
+            //Give Player back movement
+            PauseData pauseData = isPaused();
+            OnPlayerPauseToggle.Raise(this, pauseData);
+        }
+    }
     void PauseBttnLogic()
     {
         if (PlayerInput.GetPausePress() || pauseBttnEvent)

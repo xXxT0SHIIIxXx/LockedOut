@@ -702,10 +702,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26c86c3bad92ca94593c6d66f9d2649d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  house: {fileID: 0}
+  house: {fileID: 3469287838175529822}
   knock: {fileID: 8300000, guid: a73091ed5c6802e47914ca743d0a3fa3, type: 3}
   ring: {fileID: 8300000, guid: b301c8bf35ccec44489a06f715f79069, type: 3}
-  OnHouseTriggerEnter: {fileID: 0}
+  OnHouseTriggerEnter: {fileID: 11400000, guid: b1bf84e14e74a41419da3e0f484beb2c,
+    type: 2}
 --- !u!65 &84854431
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2193,7 +2194,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.19937325, y: 0.66527015, z: -0.19122647, w: 0.6936126}
+  m_LocalRotation: {x: 0.19937329, y: 0.66527015, z: -0.19122644, w: 0.6936126}
   m_LocalPosition: {x: 41.609955, y: 7.779413, z: -0.43777537}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -13928,7 +13929,7 @@ Transform:
   m_GameObject: {fileID: 2032250596}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.92387956, z: 0, w: 0.38268343}
-  m_LocalPosition: {x: -0.271, y: -0.251, z: 0.046}
+  m_LocalPosition: {x: -0.324, y: -0.429, z: 0.02072925}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13998,7 +13999,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2038828181}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.19937325, y: 0.66527015, z: -0.19122647, w: 0.6936126}
+  m_LocalRotation: {x: 0.19937329, y: 0.66527015, z: -0.19122644, w: 0.6936126}
   m_LocalPosition: {x: 41.609955, y: 7.779413, z: -0.43777537}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -16952,6 +16953,7 @@ GameObject:
   - component: {fileID: 3469287838175529821}
   - component: {fileID: 1711813854383177623}
   - component: {fileID: 1302055527}
+  - component: {fileID: 3469287838175529822}
   m_Layer: 0
   m_Name: House2
   m_TagString: Untagged
@@ -23894,6 +23896,31 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148528995906}
   m_Mesh: {fileID: 3797953710239847172, guid: 015eeb3d41a5941168d2f8a5fd0794f0, type: 3}
+--- !u!114 &3469287838175529822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148528995906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88d2fd20b035bb64da9845551cfb4850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  portraitImg: {fileID: 21300000, guid: 89bb41b2816927545b7a075f248f8255, type: 3}
+  inside: 0
+  locked: 0
+  voiceLines:
+  - Heyy! How are you doing sweetie?
+  - I'm trynna clean out my backyard but someone keeps throwing poop over my fence
+  - Will you help me defend against this shit slinger??
+  minigameIndex: 1
+  password: 000000000100000000000000
+  passwordInput: 
+  UiPos: {fileID: 7272638918354159036}
+  doorPos: {fileID: 1721686125}
+  bellPos: {fileID: 2032250597}
 --- !u!33 &3469287838182015539
 MeshFilter:
   m_ObjectHideFlags: 0

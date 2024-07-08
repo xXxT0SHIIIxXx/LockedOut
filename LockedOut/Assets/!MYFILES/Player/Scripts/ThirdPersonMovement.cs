@@ -80,7 +80,7 @@ public class ThirdPersonMovement : MonoBehaviour
         int ringAnimHash = Animator.StringToHash(animBaseLayer + ".Ring");
         var transPos = new Vector3(transform.position.x, 0, transform.position.z);
         // Lerp position
-        while (Vector3.Distance(transPos, targetPosition) > 4f)
+        while (Vector3.Distance(transPos, targetPosition) > 6f)
         {
             Debug.Log(Vector3.Distance(transPos, targetPosition));
             animator.SetFloat("magnitude", 1f);

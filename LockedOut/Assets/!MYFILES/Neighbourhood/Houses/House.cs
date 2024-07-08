@@ -9,6 +9,7 @@ public class House : MonoBehaviour
     public Sprite portraitImg;
     public bool inside;
     public bool locked;
+    public bool completed;
     public string[] voiceLines;
     public int minigameIndex;
 
