@@ -38,10 +38,12 @@ public struct HouseData
     public bool locked;
     public bool inside;
     public bool answered;
+    public bool rejected;
     public bool passwordCorrect;
     public bool canPlayerMove;
 
     public string[] voiceLines;
+    public string[] rejectionLines;
     public int[] password;
     public List<int> passwordInput;
 
@@ -62,9 +64,6 @@ public struct HouseData
     public bool isPasswordRight()
     {
         bool result = false;
-
-        if(password.Length == passwordInput.Count)
-        {
             for(int i = 0; i < password.Length; i++)
             {
                 if (password[i] == passwordInput[i])
@@ -77,13 +76,20 @@ public struct HouseData
                     return result;
                 }
             }
+
+        return result;
+    }
+
+    public bool isPasswordEntered()
+    {
+        if (password.Length == passwordInput.Count)
+        {
+            return true;
         }
         else
         {
-            result = false;
+            return false;
         }
-
-        return result;
     }
 
     public HouseData createDatafromHouse(House house)
@@ -93,12 +99,14 @@ public struct HouseData
         data.portraitImg = house.portraitImg;
         data.locked = house.locked;
         data.inside = house.inside;
+        data.rejected = house.rejected;
         data.UiPos = house.UiPos;
         data.doorPos = house.doorPos;
         data.bellPos = house.bellPos;
         data.password = house.password;
         data.passwordInput = house.passwordInput;
         data.voiceLines = house.voiceLines;
+        data.rejectionLines = house.rejectionLines;
         return data;
     }
 }
@@ -174,30 +182,49 @@ public class GameSystem : MonoBehaviour
 
     void InteractionDecide()
     {
+        if(curHouseData.rejected)
+        {
+            curHouseData.answered = true;
+            OnDialogBegin.Raise(this, curHouseData);
+            return;
+        }
+
         if (curHouseData.password.Length == 1 || curHouseData.passwordCorrect)
         {
             //No Password so Start Dialog.
             curHouseData.answered = true;
             OnDialogBegin.Raise(this, curHouseData);
+            return;
         }
         else if (curHouseData.password.Length > 1)
         {
-            //Has Password so Give Player back movement and input to list and wait for new keypress.
-            curHouseData.canPlayerMove = true;
-
             //Add Input to List
             curHouseData.AddInputToPassWord(curHouseData);
 
-            if(curHouseData.isPasswordRight())
+            //Checks if pasword.length == passwordInput.length
+            if(curHouseData.isPasswordEntered())
             {
-                curHouseData.passwordCorrect = true;
-                InteractionDecide();
-                return;
+                //Checks if each input in password matches the inputted password. if so then go to minigame.
+                // if not then do "IDKYOU" dialog
+                if(curHouseData.isPasswordRight())
+                {
+                    curHouseData.passwordCorrect = true;
+                    InteractionDecide();
+                    return;
+                }
+                else
+                {
+                    curHouseData.rejected = true;
+                    InteractionDecide();
+                    return;
+                }
             }
-
-            //Give Player back movement
-            PauseData pauseData = isPaused();
-            OnPlayerPauseToggle.Raise(this, pauseData);
+            else
+            {
+                //Give Player back movement
+                PauseData pauseData = isPaused();
+                OnPlayerPauseToggle.Raise(this, pauseData);
+            }
         }
     }
     void PauseBttnLogic()

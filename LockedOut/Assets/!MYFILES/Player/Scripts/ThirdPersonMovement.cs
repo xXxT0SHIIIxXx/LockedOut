@@ -82,7 +82,10 @@ public class ThirdPersonMovement : MonoBehaviour
         // Lerp position
         while (Vector3.Distance(transPos, targetPosition) > 6f)
         {
-            Debug.Log(Vector3.Distance(transPos, targetPosition));
+            var dist = (Vector3.Distance(transPos, targetPosition));
+            Debug.Log("Mypos: " + transPos.x + " : " + transPos.y + " : " + transPos.z);
+            Debug.Log("targpos: " + targetPosition.x + " : " + targetPosition.y + " : " + targetPosition.z);
+            Debug.Log(dist);
             animator.SetFloat("magnitude", 1f);
             transform.position = Vector3.Lerp(transform.position, targetPosition, speed * Time.deltaTime);
             yield return null;

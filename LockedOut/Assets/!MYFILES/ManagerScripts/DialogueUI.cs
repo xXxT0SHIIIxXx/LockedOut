@@ -13,6 +13,8 @@ public class DialogueUI : MonoBehaviour
     [SerializeField] TMP_Text dialogueTXT;
     [SerializeField] Image portraitIMG;
 
+    string[] curLines;
+
     [Header("Events")]
     public GameEvent OnDialogAccept;
     public GameEvent OnDialogDecline;
@@ -63,7 +65,22 @@ public class DialogueUI : MonoBehaviour
     {
         if (PlayerInput.DialogueNextPress() && nextUI.activeSelf == true)
         {
-            NextVoiceLine();
+            if(curHouse.rejected && index == curLines.Length - 1)
+            {
+                //Close Dialog Box and reset
+                curHouse.rejected = false;
+                curHouse.passwordInput.Clear();
+                index = 0;
+                curHouse.answered = false;
+                MovementData data = new MovementData();
+                data.canMove = true;
+                DialogueEnd();
+                OnDialogDecline.Raise(this, data);
+            }
+            else
+            {
+                NextVoiceLine();
+            }
         }
 
         if (acceptDeclineUI.activeSelf == true)
@@ -81,6 +98,11 @@ public class DialogueUI : MonoBehaviour
 
             if (result == 1)
             {
+                if(curHouse.passwordInput.Count >0)
+                {
+                    curHouse.passwordInput.Clear();
+                }
+                //Close Dialog Box and reset
                 DialogueEnd();
                 index = 0;
                 curHouse.answered = false;
@@ -100,16 +122,30 @@ public class DialogueUI : MonoBehaviour
             curHouse = result;
             nextUI.SetActive(true);
             acceptDeclineUI.SetActive(false);
+            curLines = LineTypeSelect();
             portraitIMG.sprite = curHouse.portraitImg;
-            dialogueTXT.text = curHouse.voiceLines[index];
+            dialogueTXT.text = curLines[index];
             elapsedTime = 0;
             opened = true;
+        }
+    }
+
+    string[] LineTypeSelect()
+    {
+        if (curHouse.rejected)
+        {
+            return curHouse.rejectionLines;
+        }
+        else
+        {
+            return curHouse.voiceLines;
         }
     }
 
     public void DialogueEnd()
     {
         opened = false;
+        index = 0;
         elapsedTime = 0;
     }
 
@@ -117,13 +153,13 @@ public class DialogueUI : MonoBehaviour
     {
         index++;
 
-        if(index >= curHouse.voiceLines.Length-1)
+        if (index >= curLines.Length - 1 && !curHouse.rejected)
         {
             nextUI.SetActive(false);
             acceptDeclineUI.SetActive(true);
         }
 
-        dialogueTXT.text = curHouse.voiceLines[index];
+        dialogueTXT.text = curLines[index];
     }
 }
 

@@ -2194,7 +2194,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.19937329, y: 0.66527015, z: -0.19122644, w: 0.6936126}
+  m_LocalRotation: {x: 0.19937325, y: 0.66527015, z: -0.19122647, w: 0.6936126}
   m_LocalPosition: {x: 41.609955, y: 7.779413, z: -0.43777537}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -13929,7 +13929,7 @@ Transform:
   m_GameObject: {fileID: 2032250596}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.92387956, z: 0, w: 0.38268343}
-  m_LocalPosition: {x: -0.324, y: -0.429, z: 0.02072925}
+  m_LocalPosition: {x: -0.324, y: -0.429, z: -0.181}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13999,7 +13999,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2038828181}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.19937329, y: 0.66527015, z: -0.19122644, w: 0.6936126}
+  m_LocalRotation: {x: 0.19937325, y: 0.66527015, z: -0.19122647, w: 0.6936126}
   m_LocalPosition: {x: 41.609955, y: 7.779413, z: -0.43777537}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -23911,10 +23911,15 @@ MonoBehaviour:
   portraitImg: {fileID: 21300000, guid: 89bb41b2816927545b7a075f248f8255, type: 3}
   inside: 0
   locked: 0
+  completed: 0
+  rejected: 0
   voiceLines:
   - Heyy! How are you doing sweetie?
   - I'm trynna clean out my backyard but someone keeps throwing poop over my fence
   - Will you help me defend against this shit slinger??
+  rejectionLines:
+  - I DONT KNOW YOUUU
+  - PLEASE LEAVE NOW! HARASS ONE OF THE NEIGHBORS!
   minigameIndex: 1
   password: 000000000100000000000000
   passwordInput: 
@@ -24000,11 +24005,14 @@ MonoBehaviour:
   portraitImg: {fileID: 21300000, guid: 89bb41b2816927545b7a075f248f8255, type: 3}
   inside: 0
   locked: 0
+  completed: 0
+  rejected: 0
   voiceLines:
   - Hello buddy, Nice to see ya!
   - I'm facing a complex sort of issue currently...
   - Rats keep eating through my pipes and I can't catch them alone
   - Would you mind helping me out? I have a reward for ya!!
+  rejectionLines: []
   minigameIndex: 0
   password: 63000000
   passwordInput: 

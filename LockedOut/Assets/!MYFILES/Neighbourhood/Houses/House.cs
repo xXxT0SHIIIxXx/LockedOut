@@ -10,7 +10,9 @@ public class House : MonoBehaviour
     public bool inside;
     public bool locked;
     public bool completed;
+    public bool rejected;
     public string[] voiceLines;
+    public string[] rejectionLines;
     public int minigameIndex;
 
     public int[] password;
