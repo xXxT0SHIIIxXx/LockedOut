@@ -46,11 +46,29 @@ public class ThirdPersonMovement : MonoBehaviour
         if (canMove)
         {
             Movement();
-           
+            AlignToSurface();
         }
     }
 
-    void Movement()
+    void AlignToSurface()
+    {
+        Ray ray = new Ray(transform.position, -transform.up);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, isGround))
+        {
+            if (hit.collider.CompareTag("Ground"))
+            {
+                newNormal = hit.normal;
+                lastSurfacePos = hit.point;
+                transform.position = new Vector3(transform.position.x, hit.point.y + 1f, transform.position.z);
+                //currentNormal = Vector3.Lerp(currentNormal, newNormal, playerSmoothRotation);
+                //transform.up = currentNormal;
+            }
+
+        }
+    }
+
+        void Movement()
     {
         movementAxis = PlayerInput.GetMovementAxis();
         Vector3 direction = new Vector3(movementAxis.x, 0, movementAxis.y).normalized;
@@ -69,6 +87,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public void KnockRing(int knockRing, Vector3 pos, Quaternion doorRotation, HouseData hD)
     {
+        canMove = false;
         Vector3 position = new Vector3(pos.x, transform.position.y, pos.z);
         StartCoroutine(KnockRingMovement(position, doorRotation, knockRing, hD));
     }
