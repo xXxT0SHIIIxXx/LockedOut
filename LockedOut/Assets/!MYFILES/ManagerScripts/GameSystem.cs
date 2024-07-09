@@ -38,12 +38,14 @@ public struct HouseData
     public bool locked;
     public bool inside;
     public bool answered;
+    public bool completed;
     public bool rejected;
     public bool passwordCorrect;
     public bool canPlayerMove;
 
     public string[] voiceLines;
     public string[] rejectionLines;
+    public string[] completedLines;
     public int[] password;
     public List<int> passwordInput;
 
@@ -99,6 +101,7 @@ public struct HouseData
         data.portraitImg = house.portraitImg;
         data.locked = house.locked;
         data.inside = house.inside;
+        data.completed = house.completed;
         data.rejected = house.rejected;
         data.UiPos = house.UiPos;
         data.doorPos = house.doorPos;
@@ -107,6 +110,7 @@ public struct HouseData
         data.passwordInput = house.passwordInput;
         data.voiceLines = house.voiceLines;
         data.rejectionLines = house.rejectionLines;
+        data.completedLines = house.completedLines;
         return data;
     }
 }
@@ -123,8 +127,8 @@ public class GameSystem : MonoBehaviour
     bool pauseBttnEvent;
 
     HouseData curHouseData;
-
-    public House[] houses;
+    [Header("Refs")]
+    public ThirdPersonMovement player;
     // Start is called before the first frame update
     void Start()
     {
@@ -150,7 +154,7 @@ public class GameSystem : MonoBehaviour
 
     public void HouseTriggerWatch()
     {
-        if (curHouseData.inside && !curHouseData.answered)
+        if (curHouseData.inside && !curHouseData.answered && player.canMove)
         {
             int result = PlayerInput.GetDoorKeyPress();
 
@@ -189,7 +193,7 @@ public class GameSystem : MonoBehaviour
             return;
         }
 
-        if (curHouseData.password.Length == 1 || curHouseData.passwordCorrect)
+        if (curHouseData.password.Length == 1 || curHouseData.passwordCorrect || curHouseData.completed)
         {
             //No Password so Start Dialog.
             curHouseData.answered = true;

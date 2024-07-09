@@ -385,6 +385,7 @@ MonoBehaviour:
     m_Bits: 64
   playerSmoothRotation: 0.2
   rotationSpeed: 6
+  canMove: 0
 --- !u!143 &73797052
 CharacterController:
   m_ObjectHideFlags: 0
@@ -13062,6 +13063,7 @@ MonoBehaviour:
   OnPlayerHouseInteract: {fileID: 11400000, guid: aa47862c9fba2244b9059572bbbd90bf,
     type: 2}
   OnDialogBegin: {fileID: 11400000, guid: abaaca497e9c62c40b132b18374d543e, type: 2}
+  player: {fileID: 73797051}
   houses: []
 --- !u!114 &1917775954
 MonoBehaviour:
@@ -23920,6 +23922,9 @@ MonoBehaviour:
   rejectionLines:
   - I DONT KNOW YOUUU
   - PLEASE LEAVE NOW! HARASS ONE OF THE NEIGHBORS!
+  completedLines:
+  - Thank you so so so much!
+  - Please come back anytime! I don't mind!
   minigameIndex: 1
   password: 000000000100000000000000
   passwordInput: 
@@ -24013,6 +24018,9 @@ MonoBehaviour:
   - Rats keep eating through my pipes and I can't catch them alone
   - Would you mind helping me out? I have a reward for ya!!
   rejectionLines: []
+  completedLines:
+  - Hey! Thank you so much for your Help!
+  - I will cherish and remember this forever!!!!
   minigameIndex: 0
   password: 63000000
   passwordInput: 

@@ -25,12 +25,13 @@ public class ThirdPersonMovement : MonoBehaviour
     [SerializeField] private float playerSmoothRotation = 0.2f;
     [SerializeField] private float rotationSpeed = 6f;
 
-    bool canMove;
+    public bool canMove;
     Vector2 movementAxis;
     Vector3 currentNormal;
     Vector3 lastSurfacePos;
     Vector3 newNormal;
     float turnSmoothVelocity;
+    
     // Start is called before the first frame update
     void Start()
     {

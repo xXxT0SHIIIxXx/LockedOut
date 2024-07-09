@@ -30,11 +30,11 @@ public class AudioManager : MonoBehaviour
             yield return null;
         }
 
-        if (state == 0)
+        if (state == 0 && !fxSrc.isPlaying)
         {
             fxSrc.PlayOneShot(fxClips[state]);
         }
-        else if (state == 1)
+        else if (state == 1 && !fxSrc.isPlaying)
         {
 
             fxSrc.PlayOneShot(fxClips[state]);

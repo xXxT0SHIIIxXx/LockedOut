@@ -65,7 +65,18 @@ public class DialogueUI : MonoBehaviour
     {
         if (PlayerInput.DialogueNextPress() && nextUI.activeSelf == true)
         {
-            if(curHouse.rejected && index == curLines.Length - 1)
+            if (curHouse.completed && index == curLines.Length - 1)
+            {
+                //Close Dialog Box and reset
+                curHouse.passwordInput.Clear();
+                index = 0;
+                curHouse.answered = false;
+                MovementData data = new MovementData();
+                data.canMove = true;
+                DialogueEnd();
+                OnDialogDecline.Raise(this, data);
+            }
+            else if (curHouse.rejected && index == curLines.Length - 1)
             {
                 //Close Dialog Box and reset
                 curHouse.rejected = false;
@@ -132,14 +143,21 @@ public class DialogueUI : MonoBehaviour
 
     string[] LineTypeSelect()
     {
+        string[] lines = new string[1];
         if (curHouse.rejected)
         {
-            return curHouse.rejectionLines;
+            lines = curHouse.rejectionLines;
         }
-        else
+        else if(!curHouse.rejected && !curHouse.completed)
         {
-            return curHouse.voiceLines;
+            lines = curHouse.voiceLines;
         }
+        else if(curHouse.completed)
+        {
+            lines = curHouse.completedLines;
+        }
+
+        return lines;
     }
 
     public void DialogueEnd()
@@ -153,10 +171,23 @@ public class DialogueUI : MonoBehaviour
     {
         index++;
 
-        if (index >= curLines.Length - 1 && !curHouse.rejected)
+        if (index >= curLines.Length - 1)
         {
-            nextUI.SetActive(false);
-            acceptDeclineUI.SetActive(true);
+            if (curHouse.rejected)
+            {
+                nextUI.SetActive(true);
+                acceptDeclineUI.SetActive(false);
+            }
+            else if (curHouse.completed)
+            {
+                nextUI.SetActive(true);
+                acceptDeclineUI.SetActive(false);
+            }
+            else
+            {
+                nextUI.SetActive(false);
+                acceptDeclineUI.SetActive(true);
+            }
         }
 
         dialogueTXT.text = curLines[index];
